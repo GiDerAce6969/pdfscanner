@@ -76,6 +76,17 @@ def analyze_document_with_gemini(_image, _placeholders):
         return None
 
 
+def pdf_to_image(pdf_bytes, page_number=0):
+    try:
+        # No need to specify poppler_path if it's in the system PATH
+        images = convert_from_bytes(pdf_bytes, first_page=page_number + 1, last_page=page_number + 1)
+        return images[0] if images else None
+    except Exception as e:
+        # The error will often tell you if poppler is not found
+        print(f"Error: {e}") 
+        return None
+
+
 # --- Streamlit App UI ---
 
 st.title("FormScanner AI 🤖")
